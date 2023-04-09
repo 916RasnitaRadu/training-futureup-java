@@ -7,6 +7,7 @@ import ro.zynk.futureup.domain.dtos.Transaction;
 
 import java.util.Date;
 
+// created a new class of response for the Transaction class
 @Getter
 @Setter
 @NoArgsConstructor

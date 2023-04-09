@@ -26,8 +26,7 @@ public class WalletService {
     private final WalletRepository walletRepository;
     private final CoinRepository coinRepository;
     private final CoinAmountRepository coinAmountRepository;
-
-    private final TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository; // added a new instance of the TransactionRepository interface
 
     @Autowired
     public WalletService(WalletRepository walletRepository, CoinRepository coinRepository, CoinAmountRepository coinAmountRepository, TransactionRepository transactionRepository) {
@@ -64,12 +63,13 @@ public class WalletService {
         return new ListWalletResponse(walletResponses);
     }
 
+    // function that saves a new transaction in the transactionRepository
     private void saveTransaction(Coin coin, Float amount)
     {
         Transaction transaction = new Transaction();
-        Date date = new Date();
+        Date date = new Date(); // we take the actual date and time
         transaction.setTransactionDate(date);
-        transaction.setCoin(coin);
+        transaction.setCoin(coin); // and use the buyed coin and the amount to set the values of the transactions
         transaction.setAmount(amount);
         transaction.setTotalValue(amount * coin.getValue());
         transactionRepository.save(transaction);
@@ -157,21 +157,22 @@ public class WalletService {
         return new ListCoinTransactionResponse(coinTransactionResponses);
     }
 
+    // the function that calculates the total value of the coins in USD
     public Double getTotalValueOfCoinsService(Long walletId)  throws NotFoundException {
-        Optional<Wallet> walletOpt = walletRepository.findById(walletId);
-        if (walletOpt.isEmpty())
+        Optional<Wallet> walletOpt = walletRepository.findById(walletId); // take the wallet from the repo
+        if (walletOpt.isEmpty()) // verifies if exists
         {
             throw new NotFoundException("Wallet not found!");
         }
         Double sum = 0.0;
         Wallet wallet = walletOpt.get();
-        List<CoinAmount> coinAmounts = wallet.getCoinAmounts();
+        List<CoinAmount> coinAmounts = wallet.getCoinAmounts(); // take the list of buyed coins for the respective wallet
         for (CoinAmount coinAmount : coinAmounts)
         {
             Double coinValue = coinAmount.getCoin().getValue();
             Double amount = coinAmount.getAmount();
             sum += amount * coinValue;
-        }
+        } // we compute the total value as the amount_of_coins * coinValue for each coin in the wallet
         return sum;
     }
 }

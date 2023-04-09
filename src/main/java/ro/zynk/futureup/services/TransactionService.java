@@ -11,6 +11,8 @@ import ro.zynk.futureup.exceptions.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// I have created a new service class for the Transaction entity for returning the list of transactions and filtering them
 @Service
 @AllArgsConstructor
 public class TransactionService {

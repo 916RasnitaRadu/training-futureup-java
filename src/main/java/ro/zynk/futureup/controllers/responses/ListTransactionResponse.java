@@ -8,6 +8,8 @@ import ro.zynk.futureup.domain.dtos.Transaction;
 
 import java.util.List;
 
+
+// created a new response class for the list of transactions
 @NoArgsConstructor
 @Getter
 @Setter

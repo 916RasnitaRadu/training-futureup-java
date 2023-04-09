@@ -6,6 +6,8 @@ import ro.zynk.futureup.domain.dtos.Transaction;
 
 import java.util.List;
 
+
+// created a transaction repository
 @Repository
 public interface TransactionRepository extends PagingAndSortingRepository<Transaction, Long> {
     List<Transaction> findAll();

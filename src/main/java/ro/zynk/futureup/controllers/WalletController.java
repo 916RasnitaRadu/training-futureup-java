@@ -47,15 +47,16 @@ public class WalletController {
         }
     }
 
-        @GetMapping(value = "/get_total_value_coins/{id}")
-    public Double getTotalValueOfCoins(@PathVariable("id") Long id)
+    // function to return the total value of coins in USD for a certain wallet
+    @GetMapping(value = "/get_total_value_coins/{id}")
+    public ResponseEntity<Double> getTotalValueOfCoins(@PathVariable("id") Long id)
     {
         try {
-            return this.walletService.getTotalValueOfCoinsService(id);
+            return new ResponseEntity<>(this.walletService.getTotalValueOfCoinsService(id), HttpStatus.OK);
         }
         catch (NotFoundException e)
         {
-            return -1.0;
+            return new ResponseEntity<>(-1.0d, HttpStatus.BAD_REQUEST);
         }
     }
 
